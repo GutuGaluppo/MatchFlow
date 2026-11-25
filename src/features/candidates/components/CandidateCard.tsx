@@ -1,6 +1,6 @@
-import type { CandidateRecord } from "../../types";
-import { StatusBadge, ScoreBadge } from "./Badge";
-import { EditIcon, TrashIcon, ChartIcon } from "./Icons";
+import type { CandidateRecord } from "../../../types";
+import { StatusBadge, ScoreBadge } from "../../../shared/ui/Badge";
+import { EditIcon, TrashIcon, ChartIcon } from "../../../shared/ui/Icons";
 
 interface CandidateCardProps {
 	candidate: CandidateRecord;

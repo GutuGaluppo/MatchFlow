@@ -1,11 +1,7 @@
-// Generic UI Components
+// Primitive UI Components
 export { Button } from "./Button";
 export { StatusBadge, ScoreBadge } from "./Badge";
-export { CandidateCard } from "./CandidateCard";
-export { CandidateList } from "./CandidateList";
-export { Header } from "./Header";
 export { Layout } from "./Layout";
-export { Sidebar } from "./Sidebar";
 export { StatCard } from "./StatCard";
 
 // Icons

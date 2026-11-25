@@ -1,4 +1,4 @@
-import { SearchIcon, BarsIcon, SquaresIcon, ChevronDownIcon } from "./Icons";
+import { SearchIcon, BarsIcon, SquaresIcon, ChevronDownIcon } from "../../../shared/ui/Icons";
 
 interface HeaderProps {
 	title: string;

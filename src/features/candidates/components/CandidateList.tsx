@@ -1,4 +1,4 @@
-import type { CandidateRecord } from "../../types";
+import type { CandidateRecord } from "../../../types";
 import { CandidateCard } from "./CandidateCard";
 
 interface CandidateListProps {

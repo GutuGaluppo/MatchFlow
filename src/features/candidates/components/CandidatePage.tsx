@@ -1,16 +1,14 @@
 import { useState, useCallback } from "react";
+import { Layout } from "../../../shared/ui";
 import {
-	Layout,
-	Header,
-	Sidebar,
-	CandidateList,
 	DashboardIcon,
 	JobsIcon,
 	CandidatesIcon,
 	GroupsIcon,
 	SupportIcon,
 	SettingsIcon,
-} from "../../../shared/ui";
+} from "../../../shared/ui/Icons";
+import { Header, Sidebar, CandidateList } from "./index";
 import type { CandidateFilters } from "../types";
 import { useCandidates } from "../hooks/useCandidates";
 import { useDashboardStats } from "../hooks/useDashboardStats";

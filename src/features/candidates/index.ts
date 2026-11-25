@@ -1,5 +1,9 @@
 // Components
 export { default as CandidatePage } from "./components/CandidatePage";
+export { CandidateCard } from "./components/CandidateCard";
+export { CandidateList } from "./components/CandidateList";
+export { Header } from "./components/Header";
+export { Sidebar } from "./components/Sidebar";
 
 // Hooks
 export { useCandidates } from "./hooks/useCandidates";
