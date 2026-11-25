@@ -108,9 +108,12 @@ describe("CandidatePage Integration", () => {
 			expect(screen.getByText("Alex Morgan")).toBeInTheDocument();
 		});
 
-		// Find and click the View button for the candidate
-		const viewButton = screen.getByLabelText(/view details for alex morgan/i);
-		await user.click(viewButton);
+		// Find and click the candidate row
+		const candidateName = screen.getByText("Alex Morgan");
+		const candidateRow = candidateName.closest("tr");
+		expect(candidateRow).toBeInTheDocument();
+
+		await user.click(candidateRow!);
 
 		// Modal should now be visible with candidate details
 		await waitFor(() => {
@@ -126,9 +129,12 @@ describe("CandidatePage Integration", () => {
 			expect(screen.getByText("Alex Morgan")).toBeInTheDocument();
 		});
 
-		// Open modal
-		const viewButton = screen.getByLabelText(/view details for alex morgan/i);
-		await user.click(viewButton);
+		// Open modal by clicking candidate row
+		const candidateName = screen.getByText("Alex Morgan");
+		const candidateRow = candidateName.closest("tr");
+		expect(candidateRow).toBeInTheDocument();
+
+		await user.click(candidateRow!);
 
 		await waitFor(() => {
 			expect(screen.getByText("Candidate Details")).toBeInTheDocument();
