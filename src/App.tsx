@@ -1,4 +1,3 @@
-import "./App.css";
 import { Suspense } from "react";
 import { CandidatePage } from "./features/candidates";
 
