@@ -5,9 +5,14 @@ import type { CandidateFilters } from "../types";
 interface CandidateFiltersProps {
 	filters: CandidateFilters;
 	onFilterChange: (filters: CandidateFilters) => void;
+	isPopover?: boolean;
 }
 
-export function CandidateFilters({ filters, onFilterChange }: CandidateFiltersProps) {
+export function CandidateFilters({
+	filters,
+	onFilterChange,
+	isPopover = false,
+}: CandidateFiltersProps) {
 	const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({
 		experience: false,
 		jobTitle: false,
@@ -34,8 +39,16 @@ export function CandidateFilters({ filters, onFilterChange }: CandidateFiltersPr
 	};
 
 	return (
-		<div className="w-64 bg-white border-r border-gray-200 overflow-y-auto flex flex-col h-full">
-			<div className="p-6 border-b border-gray-200">
+		<div
+			className={`bg-white flex flex-col ${
+				isPopover
+					? "w-80"
+					: "w-64 border-r border-gray-200 overflow-y-auto h-full"
+			}`}
+		>
+			<div
+				className={`border-b border-gray-200 ${isPopover ? "p-4" : "p-6"}`}
+			>
 				<h2 className="text-lg font-semibold text-gray-900 mb-4">Filter Candidates</h2>
 				<button
 					onClick={handleClearFilters}

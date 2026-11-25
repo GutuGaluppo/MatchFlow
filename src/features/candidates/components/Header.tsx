@@ -1,13 +1,24 @@
 import { SearchIcon, BarsIcon, SquaresIcon, ChevronDownIcon } from "../../../shared/ui/Icons";
+import type { CandidateFilters } from "../types";
+import { CandidateFilters as CandidateFiltersComponent } from "./CandidateFilters";
 
 interface HeaderProps {
 	title: string;
 	breadcrumbs?: { label: string; href?: string }[];
 	onSearch?: (query: string) => void;
 	filterCount?: number;
+	filters?: CandidateFilters;
+	onFilterChange?: (filters: CandidateFilters) => void;
 }
 
-export function Header({ title, breadcrumbs, onSearch, filterCount }: HeaderProps) {
+export function Header({
+	title,
+	breadcrumbs,
+	onSearch,
+	filterCount,
+	filters = {},
+	onFilterChange = () => {},
+}: HeaderProps) {
 	return (
 		<div className="bg-white border-b border-gray-200">
 			<div className="px-8 py-6">
@@ -46,11 +57,22 @@ export function Header({ title, breadcrumbs, onSearch, filterCount }: HeaderProp
 							</div>
 						</div>
 
-						<button className="flex items-center gap-2 px-4 py-2.5 rounded-lg border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 transition-colors">
-							<ChevronDownIcon className="w-4 h-4" />
-							<span className="text-sm font-medium">Filters</span>
-							{filterCount ? <span className="text-xs text-gray-600">({filterCount})</span> : null}
-						</button>
+						{/* Filters Popover using native <details> */}
+						<details className="relative">
+							<summary className="flex items-center gap-2 px-4 py-2.5 rounded-lg border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 transition-colors cursor-pointer list-none">
+								<ChevronDownIcon className="w-4 h-4" />
+								<span className="text-sm font-medium">Filters</span>
+								{filterCount ? <span className="text-xs text-gray-600">({filterCount})</span> : null}
+							</summary>
+
+							<div className="absolute right-0 top-full mt-2 bg-white border border-gray-200 rounded-lg shadow-lg z-30 max-h-96 overflow-y-auto">
+								<CandidateFiltersComponent
+									filters={filters}
+									onFilterChange={onFilterChange}
+									isPopover={true}
+								/>
+							</div>
+						</details>
 
 						<button className="p-2.5 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors" title="List view">
 							<BarsIcon className="w-5 h-5" />

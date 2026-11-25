@@ -14,7 +14,6 @@ import { useCandidates } from "../hooks/useCandidates";
 import { useDashboardStats } from "../hooks/useDashboardStats";
 import { DashboardStats } from "./DashboardStats";
 import { CandidateDetailModal } from "./CandidateDetailModal";
-import { CandidateFilters as CandidateFiltersComponent } from "./CandidateFilters";
 
 export default function CandidatePage() {
 	const [filters, setFilters] = useState<CandidateFilters>({});
@@ -77,50 +76,46 @@ export default function CandidatePage() {
 				/>
 			}
 		>
-			<div className="flex flex-1 overflow-hidden">
-				{/* Filter Sidebar */}
-				<CandidateFiltersComponent filters={filters} onFilterChange={handleFilterChange} />
+			<div className="flex-1 flex flex-col overflow-hidden">
+				<Header
+					title="Candidates"
+					breadcrumbs={[{ label: "Home" }, { label: "Candidates" }]}
+					onSearch={handleSearchChange}
+					filterCount={filterCount}
+					filters={filters}
+					onFilterChange={handleFilterChange}
+				/>
+				<div className="flex-1 overflow-y-auto">
+					<div className="p-8">
+						{/* Dashboard Stats */}
+						<DashboardStats metrics={metrics} isLoading={isLoading} />
 
-				{/* Main Content */}
-				<div className="flex-1 flex flex-col overflow-hidden">
-					<Header
-						title="Candidates"
-						breadcrumbs={[{ label: "Home" }, { label: "Candidates" }]}
-						onSearch={handleSearchChange}
-						filterCount={filterCount}
-					/>
-					<div className="flex-1 overflow-y-auto">
-						<div className="p-8">
-							{/* Dashboard Stats */}
-							<DashboardStats metrics={metrics} isLoading={isLoading} />
-
-							{/* Candidates Count */}
-							<div className="mb-6 flex items-center justify-between">
-								<div className="flex items-baseline gap-3">
-									<h2 className="text-lg font-semibold text-gray-700">
-										{candidates.length}
-										<span className="text-sm text-gray-500 font-normal ml-2">
-											{candidates.length === 1 ? "candidate" : "candidates"}
-											{filterCount > 0 ? " found" : " applied"}
-										</span>
-									</h2>
-									{isRefetching && (
-										<span className="text-xs text-gray-400 animate-pulse">Updating...</span>
-									)}
-								</div>
+						{/* Candidates Count */}
+						<div className="mb-6 flex items-center justify-between">
+							<div className="flex items-baseline gap-3">
+								<h2 className="text-lg font-semibold text-gray-700">
+									{candidates.length}
+									<span className="text-sm text-gray-500 font-normal ml-2">
+										{candidates.length === 1 ? "candidate" : "candidates"}
+										{filterCount > 0 ? " found" : " applied"}
+									</span>
+								</h2>
+								{isRefetching && (
+									<span className="text-xs text-gray-400 animate-pulse">Updating...</span>
+								)}
 							</div>
+						</div>
 
-							{/* Candidate List */}
-							<div className={isRefetching ? "opacity-60" : ""}>
-								<CandidateList
-									candidates={candidates}
-									isLoading={isLoading}
-									onSchedule={handleSchedule}
-									onEdit={handleEdit}
-									onDelete={handleDelete}
-									onView={handleView}
-								/>
-							</div>
+						{/* Candidate List */}
+						<div className={isRefetching ? "opacity-60" : ""}>
+							<CandidateList
+								candidates={candidates}
+								isLoading={isLoading}
+								onSchedule={handleSchedule}
+								onEdit={handleEdit}
+								onDelete={handleDelete}
+								onView={handleView}
+							/>
 						</div>
 					</div>
 				</div>
