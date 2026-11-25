@@ -1,6 +1,6 @@
 import type { CandidateRecord } from "../../../types";
 import { StatusBadge, ScoreBadge } from "../../../shared/ui/Badge";
-import { EditIcon, TrashIcon, ChartIcon } from "../../../shared/ui/Icons";
+import { EditIcon, TrashIcon } from "../../../shared/ui/Icons";
 
 interface CandidateCardProps {
 	candidate: CandidateRecord;
@@ -45,13 +45,23 @@ export function CandidateCard({
 
 	return (
 		<div
-			className="flex items-center gap-4 px-6 py-4 border-b border-gray-100 hover:bg-blue-50 transition-colors focus-within:bg-blue-50"
+			className="flex items-center gap-4 px-6 py-4 border-b border-gray-100 hover:bg-blue-50 transition-colors focus-within:bg-blue-50 group cursor-pointer"
 			role="row"
+			onClick={() => onView?.(candidate.id)}
+			onKeyDown={(e) => {
+				if (e.key === "Enter" || e.key === " ") {
+					e.preventDefault();
+					onView?.(candidate.id);
+				}
+			}}
+			tabIndex={0}
+			aria-label={`View details for ${candidate.name}`}
 		>
 			<input
 				type="checkbox"
 				className="w-4 h-4 rounded border-gray-300 cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500"
 				aria-label={`Select ${candidate.name}`}
+				onClick={(e) => e.stopPropagation()}
 			/>
 
 			<div className="flex items-center gap-4 flex-1 min-w-0">
@@ -87,7 +97,10 @@ export function CandidateCard({
 
 			<div className="flex-shrink-0 w-32">
 				<button
-					onClick={() => onSchedule?.(candidate.id)}
+					onClick={(e) => {
+						e.stopPropagation();
+						onSchedule?.(candidate.id);
+					}}
 					className="w-full px-3 py-2 bg-blue-600 text-white rounded-lg font-medium text-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1 transition-all disabled:opacity-50"
 					aria-label={`Schedule interview with ${candidate.name}`}
 				>
@@ -97,26 +110,24 @@ export function CandidateCard({
 
 			<div className="flex-shrink-0 flex items-center gap-2">
 				<button
-					onClick={() => onEdit?.(candidate.id)}
+					onClick={(e) => {
+						e.stopPropagation();
+						onEdit?.(candidate.id);
+					}}
 					className="p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-all focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1"
 					aria-label={`Edit ${candidate.name}`}
 				>
 					<EditIcon className="w-5 h-5" aria-hidden="true" />
 				</button>
 				<button
-					onClick={() => onDelete?.(candidate.id)}
+					onClick={(e) => {
+						e.stopPropagation();
+						onDelete?.(candidate.id);
+					}}
 					className="p-2 text-gray-600 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-1"
 					aria-label={`Delete ${candidate.name}`}
 				>
 					<TrashIcon className="w-5 h-5" aria-hidden="true" />
-				</button>
-				<button
-					onClick={() => onView?.(candidate.id)}
-					className="p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-all focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1"
-					aria-label={`View details for ${candidate.name}`}
-					title="View candidate details"
-				>
-					<ChartIcon className="w-5 h-5" aria-hidden="true" />
 				</button>
 			</div>
 		</div>
