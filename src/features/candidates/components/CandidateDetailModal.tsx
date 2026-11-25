@@ -35,13 +35,37 @@ export function CandidateDetailModal({
 	onClose,
 }: CandidateDetailModalProps) {
 	useEffect(() => {
+		if (!isOpen) return;
+
+		// Handle Escape key
 		const handleEscape = (e: KeyboardEvent) => {
-			if (e.key === "Escape" && isOpen) {
+			if (e.key === "Escape") {
+				e.preventDefault();
 				onClose();
 			}
 		};
+
+		// Store the focused element before opening modal
+		const previouslyFocused = document.activeElement as HTMLElement;
+
+		// Prevent body scroll
+		const originalOverflow = document.body.style.overflow;
+		document.body.style.overflow = "hidden";
+
 		window.addEventListener("keydown", handleEscape);
-		return () => window.removeEventListener("keydown", handleEscape);
+
+		// Focus the modal on open
+		const modalElement = document.getElementById("candidate-detail-modal");
+		if (modalElement) {
+			modalElement.focus();
+		}
+
+		return () => {
+			window.removeEventListener("keydown", handleEscape);
+			document.body.style.overflow = originalOverflow;
+			// Restore focus to previously focused element
+			previouslyFocused?.focus();
+		};
 	}, [isOpen, onClose]);
 
 	if (!isOpen || !candidate) return null;
@@ -54,17 +78,27 @@ export function CandidateDetailModal({
 			<div
 				className="fixed inset-0 bg-black bg-opacity-50 z-40 transition-opacity"
 				onClick={onClose}
+				aria-hidden="true"
 			/>
 
-			<div className="fixed right-0 top-0 h-screen w-full max-w-md bg-white shadow-xl z-50 overflow-y-auto">
+			<div
+				id="candidate-detail-modal"
+				className="fixed right-0 top-0 h-screen w-full max-w-md bg-white shadow-xl z-50 overflow-y-auto focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500"
+				role="dialog"
+				aria-modal="true"
+				aria-labelledby="candidate-detail-title"
+				tabIndex={-1}
+			>
 				<div className="flex items-center justify-between p-6 border-b border-gray-200 sticky top-0 bg-white">
-					<h2 className="text-xl font-semibold text-gray-900">Candidate Details</h2>
+					<h2 id="candidate-detail-title" className="text-xl font-semibold text-gray-900">
+						Candidate Details
+					</h2>
 					<button
 						onClick={onClose}
-						className="p-2 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
-						title="Close"
+						className="p-2 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1"
+						aria-label="Close candidate details"
 					>
-						<XIcon className="w-5 h-5" />
+						<XIcon className="w-5 h-5" aria-hidden="true" />
 					</button>
 				</div>
 
@@ -135,20 +169,20 @@ export function CandidateDetailModal({
 					</div>
 
 					{/* Action Buttons */}
-					<div className="bg-gray-50 rounded-lg p-4 space-y-2">
-						<button className="w-full px-4 py-2 bg-white border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors font-medium text-sm">
+					<div className="bg-gray-50 rounded-lg p-4 space-y-2" role="group" aria-label="Candidate actions">
+						<button className="w-full px-4 py-2 bg-white border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1 transition-all font-medium text-sm">
 							Review
 						</button>
-						<button className="w-full px-4 py-2 bg-white border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors font-medium text-sm">
+						<button className="w-full px-4 py-2 bg-white border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1 transition-all font-medium text-sm">
 							Shortlist
 						</button>
-						<button className="w-full px-4 py-2 bg-white border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors font-medium text-sm">
+						<button className="w-full px-4 py-2 bg-white border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1 transition-all font-medium text-sm">
 							Schedule Interview
 						</button>
-						<button className="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium text-sm">
+						<button className="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1 transition-all font-medium text-sm">
 							Send Offer
 						</button>
-						<button className="w-full px-4 py-2 bg-white border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors font-medium text-sm">
+						<button className="w-full px-4 py-2 bg-white border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1 transition-all font-medium text-sm">
 							More Actions
 						</button>
 					</div>

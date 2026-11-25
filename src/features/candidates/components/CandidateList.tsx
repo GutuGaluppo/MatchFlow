@@ -8,6 +8,7 @@ interface CandidateListProps {
 	onEdit?: (id: string) => void;
 	onDelete?: (id: string) => void;
 	onView?: (id: string) => void;
+	scores?: Record<string, number>;
 }
 
 export function CandidateList({
@@ -17,6 +18,7 @@ export function CandidateList({
 	onEdit,
 	onDelete,
 	onView,
+	scores = {},
 }: CandidateListProps) {
 	if (isLoading) {
 		return (
@@ -77,7 +79,7 @@ export function CandidateList({
 						<CandidateCard
 							key={candidate.id}
 							candidate={candidate}
-							score={Math.floor(Math.random() * 100)}
+							score={scores[candidate.id] ?? 75}
 							onSchedule={onSchedule}
 							onEdit={onEdit}
 							onDelete={onDelete}

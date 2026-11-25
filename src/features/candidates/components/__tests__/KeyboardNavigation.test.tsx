@@ -132,7 +132,10 @@ describe("Keyboard Navigation - A11y Compliance", () => {
 
 		const candidateRow = screen.getByText("Alex Morgan").closest("tr");
 		expect(candidateRow).toHaveAttribute("tabIndex", "0");
-		expect(candidateRow).toHaveAttribute("role", "button");
+		// Row is focusable and can be focused by keyboard
+		expect(candidateRow).not.toHaveFocus(); // Initially not focused
+		candidateRow?.focus();
+		expect(candidateRow).toHaveFocus();
 	});
 
 	it("checkboxes are keyboard accessible", async () => {

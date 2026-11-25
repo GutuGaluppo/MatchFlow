@@ -67,37 +67,20 @@ describe("CandidatePage Integration", () => {
 	it("renders page with header and main sections", async () => {
 		renderWithQueryClient(<CandidatePage />);
 
-		await waitFor(() => {
-			const candidates = screen.queryByText("Candidates");
-			expect(candidates).toBeTruthy();
-		}, { timeout: 500 }).catch(() => {
-			// Component rendered but Candidates text might not be visible
-		});
-
-		const filterCandidates = screen.queryByText("Filter Candidates");
-		expect(filterCandidates).toBeTruthy();
+		expect(await screen.findByRole("heading", { name: "Candidates" })).toBeInTheDocument();
+		expect(screen.getByText("Filter Candidates")).toBeInTheDocument();
 	});
 
 	it("displays dashboard stats", async () => {
 		renderWithQueryClient(<CandidatePage />);
 
-		await waitFor(() => {
-			const totalApplicants = screen.queryByText("Total Applicants");
-			expect(totalApplicants).toBeTruthy();
-		}, { timeout: 500 }).catch(() => {
-			// Stats might not load in test environment
-		});
+		expect(await screen.findByText("Total Applicants")).toBeInTheDocument();
 	});
 
 	it("displays candidate list", async () => {
 		renderWithQueryClient(<CandidatePage />);
 
-		await waitFor(() => {
-			const candidate = screen.queryByText("Alex Morgan");
-			expect(candidate).toBeTruthy();
-		}, { timeout: 500 }).catch(() => {
-			// Mock might not work in test environment
-		});
+		expect(await screen.findByText("Alex Morgan")).toBeInTheDocument();
 	});
 
 	it("opens detail modal when candidate is clicked", async () => {
@@ -141,7 +124,7 @@ describe("CandidatePage Integration", () => {
 		});
 
 		// Close modal
-		const closeButton = screen.getByTitle("Close");
+		const closeButton = screen.getByLabelText("Close candidate details");
 		await user.click(closeButton);
 
 		await waitFor(() => {
@@ -152,21 +135,12 @@ describe("CandidatePage Integration", () => {
 	it("displays breadcrumbs", async () => {
 		renderWithQueryClient(<CandidatePage />);
 
-		await waitFor(() => {
-			expect(screen.queryByText("Home")).toBeInTheDocument();
-		}, { timeout: 500 }).catch(() => {
-			// Breadcrumbs might not render in test environment
-		});
+		expect(await screen.findByText("Home")).toBeInTheDocument();
 	});
 
 	it("renders sidebar navigation", async () => {
 		renderWithQueryClient(<CandidatePage />);
 
-		await waitFor(() => {
-			const skillSync = screen.queryByText("SkillSync");
-			expect(skillSync).toBeTruthy();
-		}, { timeout: 500 }).catch(() => {
-			// Sidebar might not render in test environment
-		});
+		expect(screen.getByText("SkillSync")).toBeInTheDocument();
 	});
 });

@@ -123,7 +123,7 @@ describe("CandidateDetailModal", () => {
 			/>
 		);
 
-		const closeButton = screen.getByTitle("Close");
+		const closeButton = screen.getByLabelText("Close candidate details");
 		await user.click(closeButton);
 
 		expect(onClose).toHaveBeenCalledOnce();

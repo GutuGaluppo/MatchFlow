@@ -54,8 +54,6 @@ export function CandidateCard({
 				}
 			}}
 			tabIndex={0}
-			role="button"
-			aria-label={`View details for ${candidate.name}`}
 		>
 			<td className="px-6 py-4">
 				<input
