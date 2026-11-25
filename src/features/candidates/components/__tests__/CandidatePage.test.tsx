@@ -109,15 +109,13 @@ describe("CandidatePage Integration", () => {
 		});
 
 		// Find and click the View button for the candidate
-		const viewButtons = screen.getAllByTitle("View details");
-		if (viewButtons.length > 0) {
-			await user.click(viewButtons[0]);
+		const viewButton = screen.getByLabelText(/view details for alex morgan/i);
+		await user.click(viewButton);
 
-			// Modal should now be visible with candidate details
-			await waitFor(() => {
-				expect(screen.getByText("Candidate Details")).toBeInTheDocument();
-			});
-		}
+		// Modal should now be visible with candidate details
+		await waitFor(() => {
+			expect(screen.getByText("Candidate Details")).toBeInTheDocument();
+		});
 	});
 
 	it("closes modal when close button is clicked", async () => {
@@ -129,22 +127,20 @@ describe("CandidatePage Integration", () => {
 		});
 
 		// Open modal
-		const viewButtons = screen.getAllByTitle("View details");
-		if (viewButtons.length > 0) {
-			await user.click(viewButtons[0]);
+		const viewButton = screen.getByLabelText(/view details for alex morgan/i);
+		await user.click(viewButton);
 
-			await waitFor(() => {
-				expect(screen.getByText("Candidate Details")).toBeInTheDocument();
-			});
+		await waitFor(() => {
+			expect(screen.getByText("Candidate Details")).toBeInTheDocument();
+		});
 
-			// Close modal
-			const closeButton = screen.getByTitle("Close");
-			await user.click(closeButton);
+		// Close modal
+		const closeButton = screen.getByTitle("Close");
+		await user.click(closeButton);
 
-			await waitFor(() => {
-				expect(screen.queryByText("Candidate Details")).not.toBeInTheDocument();
-			});
-		}
+		await waitFor(() => {
+			expect(screen.queryByText("Candidate Details")).not.toBeInTheDocument();
+		});
 	});
 
 	it("displays breadcrumbs", async () => {

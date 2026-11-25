@@ -43,14 +43,16 @@ export function StatCard({
 
 	return (
 		<div
-			className={`p-6 rounded-lg border ${style.bg} ${style.border} shadow-sm transition-all hover:shadow-md`}
+			className={`p-6 rounded-lg border ${style.bg} ${style.border} shadow-sm transition-all hover:shadow-md focus-within:ring-2 focus-within:ring-blue-500`}
+			role="region"
+			aria-label={`${label}: ${count} candidates`}
 		>
-			<div className="flex items-baseline justify-between">
-				<div>
+			<div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-4">
+				<div className="flex-1">
 					<p className={`text-sm font-medium ${style.labelColor}`}>{label}</p>
 					<p className="text-3xl font-bold text-gray-900 mt-2">{count}</p>
 				</div>
-				<div className={`text-right ${style.labelColor}`}>
+				<div className={`text-left sm:text-right whitespace-nowrap ${style.labelColor}`}>
 					<p className="text-sm font-semibold">{percentage}%</p>
 					<p className="text-xs mt-1 opacity-75">of total</p>
 				</div>

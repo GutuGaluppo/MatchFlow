@@ -39,32 +39,43 @@ export function CandidateList({
 	}
 
 	return (
-		<div className="bg-white rounded-lg border border-gray-200 shadow-sm overflow-hidden">
+		<div
+			className="bg-white rounded-lg border border-gray-200 shadow-sm overflow-hidden"
+			role="region"
+			aria-label="Candidates table"
+		>
 			<div className="border-b border-gray-100 bg-gray-50 px-6 py-4">
 				<div className="flex items-center gap-4">
-					<input type="checkbox" className="w-4 h-4 rounded border-gray-300 cursor-pointer" />
-					<div className="flex-1 grid grid-cols-5 gap-4 text-xs font-semibold text-gray-600 uppercase tracking-wider">
-						<div className="col-span-2">Candidates</div>
-						<div>Status</div>
-						<div>Applied On</div>
-						<div className="text-right">ATS Score</div>
+					<input
+						type="checkbox"
+						className="w-4 h-4 rounded border-gray-300 cursor-pointer"
+						aria-label="Select all candidates"
+					/>
+					<div className="flex-1 flex items-center gap-4 text-xs font-semibold text-gray-600 uppercase tracking-wider">
+						<div className="flex-1">Candidates</div>
+						<div className="w-32">Status</div>
+						<div className="w-24">Applied On</div>
+						<div className="w-20">ATS Score</div>
 					</div>
-					<div className="w-32 text-xs font-semibold text-gray-600 uppercase tracking-wider">Schedule Interview</div>
-					<div className="w-20 text-right text-xs font-semibold text-gray-600 uppercase tracking-wider">Actions</div>
+					<div className="w-32 text-xs font-semibold text-gray-600 uppercase tracking-wider">Schedule</div>
+					<div className="w-24 text-xs font-semibold text-gray-600 uppercase tracking-wider text-center">
+						Actions
+					</div>
 				</div>
 			</div>
 
-			<div className="divide-y divide-gray-100">
+			<div className="divide-y divide-gray-100" role="list">
 				{candidates.map((candidate) => (
-					<CandidateCard
-						key={candidate.id}
-						candidate={candidate}
-						score={Math.floor(Math.random() * 100)}
-						onSchedule={onSchedule}
-						onEdit={onEdit}
-						onDelete={onDelete}
-						onView={onView}
-					/>
+					<div key={candidate.id} role="listitem">
+						<CandidateCard
+							candidate={candidate}
+							score={Math.floor(Math.random() * 100)}
+							onSchedule={onSchedule}
+							onEdit={onEdit}
+							onDelete={onDelete}
+							onView={onView}
+						/>
+					</div>
 				))}
 			</div>
 		</div>

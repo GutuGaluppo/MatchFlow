@@ -45,6 +45,8 @@ export function CandidateFilters({
 					? "w-80"
 					: "w-64 border-r border-gray-200 overflow-y-auto h-full"
 			}`}
+			role="region"
+			aria-label="Candidate filters"
 		>
 			<div
 				className={`border-b border-gray-200 ${isPopover ? "p-4" : "p-6"}`}
@@ -52,7 +54,8 @@ export function CandidateFilters({
 				<h2 className="text-lg font-semibold text-gray-900 mb-4">Filter Candidates</h2>
 				<button
 					onClick={handleClearFilters}
-					className="text-sm text-gray-600 hover:text-gray-900 font-medium"
+					className="text-sm text-gray-600 hover:text-gray-900 font-medium focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1 rounded px-2 py-1 transition-all"
+					aria-label="Clear all applied filters"
 				>
 					Clear all
 				</button>
@@ -63,13 +66,16 @@ export function CandidateFilters({
 				<div className="border-b border-gray-100">
 					<button
 						onClick={() => toggleSection("saved")}
-						className="w-full px-6 py-4 flex items-center justify-between hover:bg-gray-50 transition-colors"
+						className="w-full px-6 py-4 flex items-center justify-between hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-inset transition-all"
+						aria-expanded={expandedSections.saved}
+						aria-controls="saved-searches-content"
 					>
 						<span className="text-sm font-semibold text-gray-900">Saved Searches</span>
 						<ChevronDownIcon
 							className={`w-4 h-4 text-gray-600 transition-transform ${
 								expandedSections.saved ? "rotate-180" : ""
 							}`}
+							aria-hidden="true"
 						/>
 					</button>
 					{expandedSections.saved && (

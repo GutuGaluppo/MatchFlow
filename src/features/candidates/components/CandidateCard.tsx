@@ -44,18 +44,26 @@ export function CandidateCard({
 	const gradient = getGradient(candidate.id);
 
 	return (
-		<div className="flex items-center gap-4 px-6 py-4 border-b border-gray-100 hover:bg-blue-50 transition-colors">
-			<input type="checkbox" className="w-4 h-4 rounded border-gray-300 cursor-pointer" />
+		<div
+			className="flex items-center gap-4 px-6 py-4 border-b border-gray-100 hover:bg-blue-50 transition-colors focus-within:bg-blue-50"
+			role="row"
+		>
+			<input
+				type="checkbox"
+				className="w-4 h-4 rounded border-gray-300 cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500"
+				aria-label={`Select ${candidate.name}`}
+			/>
 
-			<div className="flex items-center gap-4 flex-1">
+			<div className="flex items-center gap-4 flex-1 min-w-0">
 				<div
 					className={`w-12 h-12 rounded-full bg-gradient-to-br ${gradient} text-white flex items-center justify-center font-bold text-sm flex-shrink-0 shadow-md`}
+					aria-label={`${candidate.name} avatar`}
 				>
 					{initials}
 				</div>
 				<div className="min-w-0 flex-1">
 					<p className="font-semibold text-gray-900 truncate">{candidate.name}</p>
-					<p className="text-sm text-gray-500">{candidate.location}</p>
+					<p className="text-sm text-gray-500 truncate">{candidate.location}</p>
 				</div>
 			</div>
 
@@ -64,47 +72,51 @@ export function CandidateCard({
 			</div>
 
 			<div className="flex-shrink-0 w-24 text-sm text-gray-600">
-				{new Date(candidate.appliedAt).toLocaleDateString("en-US", {
-					month: "short",
-					day: "numeric",
-					year: "numeric",
-				})}
+				<time dateTime={candidate.appliedAt}>
+					{new Date(candidate.appliedAt).toLocaleDateString("en-US", {
+						month: "short",
+						day: "numeric",
+						year: "numeric",
+					})}
+				</time>
 			</div>
 
 			<div className="flex-shrink-0">
 				<ScoreBadge score={score} />
 			</div>
 
-			<div className="flex-shrink-0">
+			<div className="flex-shrink-0 w-32">
 				<button
 					onClick={() => onSchedule?.(candidate.id)}
-					className="px-4 py-2 bg-blue-600 text-white rounded-lg font-medium text-sm hover:bg-blue-700 transition-colors"
+					className="w-full px-3 py-2 bg-blue-600 text-white rounded-lg font-medium text-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1 transition-all disabled:opacity-50"
+					aria-label={`Schedule interview with ${candidate.name}`}
 				>
 					Schedule
 				</button>
 			</div>
 
-			<div className="flex-shrink-0 flex items-center gap-3">
+			<div className="flex-shrink-0 flex items-center gap-2">
 				<button
 					onClick={() => onEdit?.(candidate.id)}
-					className="p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors"
-					title="Edit"
+					className="p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-all focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1"
+					aria-label={`Edit ${candidate.name}`}
 				>
-					<EditIcon className="w-5 h-5" />
+					<EditIcon className="w-5 h-5" aria-hidden="true" />
 				</button>
 				<button
 					onClick={() => onDelete?.(candidate.id)}
-					className="p-2 text-gray-600 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
-					title="Delete"
+					className="p-2 text-gray-600 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-1"
+					aria-label={`Delete ${candidate.name}`}
 				>
-					<TrashIcon className="w-5 h-5" />
+					<TrashIcon className="w-5 h-5" aria-hidden="true" />
 				</button>
 				<button
 					onClick={() => onView?.(candidate.id)}
-					className="p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors"
-					title="View details"
+					className="p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-all focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1"
+					aria-label={`View details for ${candidate.name}`}
+					title="View candidate details"
 				>
-					<ChartIcon className="w-5 h-5" />
+					<ChartIcon className="w-5 h-5" aria-hidden="true" />
 				</button>
 			</div>
 		</div>
