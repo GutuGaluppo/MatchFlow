@@ -45,7 +45,7 @@ export function CandidateCard({
 
 	return (
 		<tr
-			className="hover:bg-blue-50 transition-colors focus-within:bg-blue-50 cursor-pointer"
+			className="hover:bg-blue-50 transition-colors focus-within:bg-blue-50 cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1"
 			onClick={() => onView?.(candidate.id)}
 			onKeyDown={(e) => {
 				if (e.key === "Enter" || e.key === " ") {
@@ -53,6 +53,9 @@ export function CandidateCard({
 					onView?.(candidate.id);
 				}
 			}}
+			tabIndex={0}
+			role="button"
+			aria-label={`View details for ${candidate.name}`}
 		>
 			<td className="px-6 py-4">
 				<input

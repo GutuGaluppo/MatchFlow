@@ -92,7 +92,9 @@ export function CandidateFilters({
 				<div className="border-b border-gray-100">
 					<button
 						onClick={() => toggleSection("experience")}
-						className="w-full px-6 py-4 flex items-center justify-between hover:bg-gray-50 transition-colors"
+						className="w-full px-6 py-4 flex items-center justify-between hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-inset transition-all"
+						aria-expanded={expandedSections.experience}
+						aria-controls="experience-content"
 					>
 						<span className="text-sm font-semibold text-gray-900">Experience level</span>
 						<ChevronDownIcon
@@ -102,10 +104,10 @@ export function CandidateFilters({
 						/>
 					</button>
 					{expandedSections.experience && (
-						<div className="px-6 py-3 space-y-2 bg-gray-50">
+						<div className="px-6 py-3 space-y-2 bg-gray-50" id="experience-content">
 							{["Entry (0-2 years)", "Mid (2-5 years)", "Senior (5+ years)"].map((level) => (
 								<label key={level} className="flex items-center gap-2 cursor-pointer">
-									<input type="checkbox" className="w-4 h-4 rounded border-gray-300" />
+									<input type="checkbox" className="w-4 h-4 rounded border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500" tabIndex={0} />
 									<span className="text-sm text-gray-700">{level}</span>
 								</label>
 							))}
@@ -117,7 +119,9 @@ export function CandidateFilters({
 				<div className="border-b border-gray-100">
 					<button
 						onClick={() => toggleSection("jobTitle")}
-						className="w-full px-6 py-4 flex items-center justify-between hover:bg-gray-50 transition-colors"
+						className="w-full px-6 py-4 flex items-center justify-between hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-inset transition-all"
+						aria-expanded={expandedSections.jobTitle}
+						aria-controls="jobTitle-content"
 					>
 						<span className="text-sm font-semibold text-gray-900">Job title</span>
 						<ChevronDownIcon
@@ -127,11 +131,12 @@ export function CandidateFilters({
 						/>
 					</button>
 					{expandedSections.jobTitle && (
-						<div className="px-6 py-3 bg-gray-50">
+						<div className="px-6 py-3 bg-gray-50" id="jobTitle-content">
 							<input
 								type="text"
 								placeholder="Search job titles..."
 								className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+								tabIndex={0}
 							/>
 						</div>
 					)}
@@ -141,7 +146,9 @@ export function CandidateFilters({
 				<div className="border-b border-gray-100">
 					<button
 						onClick={() => toggleSection("skills")}
-						className="w-full px-6 py-4 flex items-center justify-between hover:bg-gray-50 transition-colors"
+						className="w-full px-6 py-4 flex items-center justify-between hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-inset transition-all"
+						aria-expanded={expandedSections.skills}
+						aria-controls="skills-content"
 					>
 						<span className="text-sm font-semibold text-gray-900">Skills</span>
 						<ChevronDownIcon
@@ -151,15 +158,16 @@ export function CandidateFilters({
 						/>
 					</button>
 					{expandedSections.skills && (
-						<div className="px-6 py-3 space-y-2 bg-gray-50">
+						<div className="px-6 py-3 space-y-2 bg-gray-50" id="skills-content">
 							<input
 								type="text"
 								placeholder="Search skills..."
 								className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 mb-2"
+								tabIndex={0}
 							/>
 							{["React", "TypeScript", "Node.js", "Python"].map((skill) => (
 								<label key={skill} className="flex items-center gap-2 cursor-pointer">
-									<input type="checkbox" className="w-4 h-4 rounded border-gray-300" />
+									<input type="checkbox" className="w-4 h-4 rounded border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500" tabIndex={0} />
 									<span className="text-sm text-gray-700">{skill}</span>
 								</label>
 							))}
@@ -171,7 +179,9 @@ export function CandidateFilters({
 				<div className="border-b border-gray-100">
 					<button
 						onClick={() => toggleSection("location")}
-						className="w-full px-6 py-4 flex items-center justify-between hover:bg-gray-50 transition-colors"
+						className="w-full px-6 py-4 flex items-center justify-between hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-inset transition-all"
+						aria-expanded={expandedSections.location}
+						aria-controls="location-content"
 					>
 						<span className="text-sm font-semibold text-gray-900">Location</span>
 						<ChevronDownIcon
@@ -181,11 +191,12 @@ export function CandidateFilters({
 						/>
 					</button>
 					{expandedSections.location && (
-						<div className="px-6 py-3 bg-gray-50">
+						<div className="px-6 py-3 bg-gray-50" id="location-content">
 							<input
 								type="text"
 								placeholder="Search locations..."
 								className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+								tabIndex={0}
 							/>
 						</div>
 					)}
@@ -195,7 +206,9 @@ export function CandidateFilters({
 				<div className="border-b border-gray-100">
 					<button
 						onClick={() => toggleSection("availability")}
-						className="w-full px-6 py-4 flex items-center justify-between hover:bg-gray-50 transition-colors"
+						className="w-full px-6 py-4 flex items-center justify-between hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-inset transition-all"
+						aria-expanded={expandedSections.availability}
+						aria-controls="availability-content"
 					>
 						<span className="text-sm font-semibold text-gray-900">Availability</span>
 						<ChevronDownIcon
@@ -205,10 +218,10 @@ export function CandidateFilters({
 						/>
 					</button>
 					{expandedSections.availability && (
-						<div className="px-6 py-3 space-y-2 bg-gray-50">
+						<div className="px-6 py-3 space-y-2 bg-gray-50" id="availability-content">
 							{["Immediate", "2 weeks", "1 month", "Negotiable"].map((avail) => (
 								<label key={avail} className="flex items-center gap-2 cursor-pointer">
-									<input type="checkbox" className="w-4 h-4 rounded border-gray-300" />
+									<input type="checkbox" className="w-4 h-4 rounded border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500" tabIndex={0} />
 									<span className="text-sm text-gray-700">{avail}</span>
 								</label>
 							))}
@@ -220,7 +233,9 @@ export function CandidateFilters({
 				<div className="border-b border-gray-100">
 					<button
 						onClick={() => toggleSection("appliedDate")}
-						className="w-full px-6 py-4 flex items-center justify-between hover:bg-gray-50 transition-colors"
+						className="w-full px-6 py-4 flex items-center justify-between hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-inset transition-all"
+						aria-expanded={expandedSections.appliedDate}
+						aria-controls="appliedDate-content"
 					>
 						<span className="text-sm font-semibold text-gray-900">Applied date</span>
 						<ChevronDownIcon
@@ -230,8 +245,8 @@ export function CandidateFilters({
 						/>
 					</button>
 					{expandedSections.appliedDate && (
-						<div className="px-6 py-3 space-y-2 bg-gray-50">
-							<input type="date" className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" />
+						<div className="px-6 py-3 space-y-2 bg-gray-50" id="appliedDate-content">
+							<input type="date" className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" tabIndex={0} />
 						</div>
 					)}
 				</div>
@@ -241,13 +256,13 @@ export function CandidateFilters({
 			<div className="border-t border-gray-200 p-6 space-y-2 bg-gray-50">
 				<button
 					onClick={handleSaveFilters}
-					className="w-full px-4 py-2.5 bg-white border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-100 transition-colors font-medium text-sm"
+					className="w-full px-4 py-2.5 bg-white border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1 transition-all font-medium text-sm"
 				>
 					Save
 				</button>
 				<button
 					onClick={handleSaveFilters}
-					className="w-full px-4 py-2.5 bg-gray-900 text-white rounded-lg hover:bg-black transition-colors font-medium text-sm"
+					className="w-full px-4 py-2.5 bg-gray-900 text-white rounded-lg hover:bg-black focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1 transition-all font-medium text-sm"
 				>
 					Update
 				</button>

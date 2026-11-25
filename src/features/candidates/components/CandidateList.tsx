@@ -49,6 +49,7 @@ export function CandidateList({
 								type="checkbox"
 								className="w-4 h-4 rounded border-gray-300 cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500"
 								aria-label="Select all candidates"
+								tabIndex={0}
 							/>
 						</th>
 						<th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider" scope="col">

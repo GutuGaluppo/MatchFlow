@@ -42,7 +42,7 @@ export function Sidebar({ items, title = "SkillSync", user }: SidebarProps) {
 								}`}
 								role="menuitem"
 								aria-current={item.active ? "page" : undefined}
-								tabIndex={item.active ? 0 : -1}
+								tabIndex={0}
 							>
 								<span className="flex-shrink-0 text-current" aria-hidden="true">{item.icon}</span>
 								<span className="text-sm">{item.label}</span>
@@ -67,7 +67,7 @@ export function Sidebar({ items, title = "SkillSync", user }: SidebarProps) {
 								}`}
 								role="menuitem"
 								aria-current={item.active ? "page" : undefined}
-								tabIndex={item.active ? 0 : -1}
+								tabIndex={0}
 							>
 								<span className="flex-shrink-0 text-current" aria-hidden="true">{item.icon}</span>
 								<span className="text-sm">{item.label}</span>
@@ -82,6 +82,7 @@ export function Sidebar({ items, title = "SkillSync", user }: SidebarProps) {
 					<button
 						className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-gray-100 transition-colors group focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1"
 						aria-label={`User profile: ${user.name}`}
+						tabIndex={0}
 					>
 						<div className="w-10 h-10 bg-gradient-to-br from-blue-400 to-purple-500 rounded-full flex-shrink-0 flex items-center justify-center text-white font-bold text-sm">
 							{user.name

@@ -104,6 +104,7 @@ export function Header({
 							className="p-2.5 text-gray-600 hover:bg-gray-100 rounded-lg transition-all focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1"
 							aria-label="Switch to list view"
 							title="List view"
+							tabIndex={0}
 						>
 							<BarsIcon className="w-5 h-5" aria-hidden="true" />
 						</button>
@@ -112,6 +113,7 @@ export function Header({
 							className="p-2.5 text-gray-600 hover:bg-gray-100 rounded-lg transition-all focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1"
 							aria-label="Switch to grid view"
 							title="Grid view"
+							tabIndex={0}
 						>
 							<SquaresIcon className="w-5 h-5" aria-hidden="true" />
 						</button>
