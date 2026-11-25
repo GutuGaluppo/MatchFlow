@@ -1,0 +1,19 @@
+{
+  "name": "matchflow-candidates-api",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Zero-dependency TypeScript REST mock API for MatchFlow's candidate pipeline",
+  "scripts": {
+    "dev": "node --disable-warning=ExperimentalWarning --experimental-strip-types --watch src/index.ts",
+    "start": "node --disable-warning=ExperimentalWarning --experimental-strip-types src/index.ts",
+    "test": "node --disable-warning=ExperimentalWarning --experimental-strip-types --test tests/*.test.ts",
+    "typecheck": "tsc --noEmit",
+    "reset": "node --disable-warning=ExperimentalWarning --experimental-strip-types src/reset.ts"
+  },
+  "engines": { "node": ">=22.6.0" },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.6.0"
+  }
+}

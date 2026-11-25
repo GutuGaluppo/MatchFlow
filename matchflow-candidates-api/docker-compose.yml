@@ -1,0 +1,9 @@
+services:
+  matchflow-api:
+    build: .
+    ports:
+      - "4000:4000"
+    volumes:
+      - matchflow-data:/app/data
+volumes:
+  matchflow-data:

@@ -1,0 +1,1 @@
+features/candidates/components/CandidatePage.tsx

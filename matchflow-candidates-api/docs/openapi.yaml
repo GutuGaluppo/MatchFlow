@@ -1,0 +1,264 @@
+openapi: 3.1.0
+info:
+  title: MatchFlow Candidates API (Mock)
+  version: 1.0.0
+  description: |-
+    Local mock API with 24 fictional applicants. Scores are illustrative,
+    skill-overlap heuristics only; they are NOT hiring decisions.
+servers:
+  - url: http://localhost:4000
+paths:
+  /api/health:
+    get:
+      summary: Health check
+      operationId: getHealth
+      responses:
+        '200':
+          description: API is running
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status: { type: string, const: ok }
+                  service: { type: string }
+                  version: { type: string }
+  /api/jobs:
+    get:
+      summary: Get all demo jobs
+      operationId: listJobs
+      responses:
+        '200':
+          description: One demo job
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items: { $ref: '#/components/schemas/Job' }
+  /api/jobs/{id}:
+    get:
+      summary: Get demo job by id
+      operationId: getJob
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string, const: instaffo-senior-product-engineer }
+      responses:
+        '200':
+          description: The demo job
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data: { $ref: '#/components/schemas/Job' }
+  /api/filters:
+    get:
+      summary: Available UI filter values
+      operationId: getFilters
+      responses:
+        '200':
+          description: Unique values from seeded candidates
+  /api/candidates:
+    get:
+      summary: List and filter fictional candidate profiles
+      operationId: listCandidates
+      parameters:
+        - { name: q, in: query, schema: { type: string }, description: Text search across name, role, headline and skills }
+        - { name: status, in: query, schema: { $ref: '#/components/schemas/CandidateStatus' } }
+        - { name: role, in: query, schema: { type: string } }
+        - { name: skills, in: query, schema: { type: string }, description: Comma-separated skill names }
+        - { name: skillMode, in: query, schema: { type: string, enum: [all, any], default: all } }
+        - { name: minScore, in: query, schema: { type: integer, minimum: 0, maximum: 100, default: 0 } }
+        - { name: maxScore, in: query, schema: { type: integer, minimum: 0, maximum: 100, default: 100 } }
+        - { name: sortBy, in: query, schema: { type: string, enum: [matchScore, name, experienceYears, updatedAt], default: matchScore } }
+        - { name: order, in: query, schema: { type: string, enum: [asc, desc] } }
+        - { name: page, in: query, schema: { type: integer, minimum: 1, default: 1 } }
+        - { name: limit, in: query, schema: { type: integer, minimum: 1, maximum: 100, default: 12 } }
+        - { $ref: '#/components/parameters/DelayMs' }
+        - { $ref: '#/components/parameters/SimulateError' }
+      responses:
+        '200':
+          description: Paginated list, includes matchScore but not match details
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/CandidateListResponse' }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '503': { $ref: '#/components/responses/SimulatedFailure' }
+  /api/candidates/{id}:
+    get:
+      summary: Candidate detail with explainable demo matching
+      operationId: getCandidate
+      parameters:
+        - { $ref: '#/components/parameters/CandidateId' }
+      responses:
+        '200':
+          description: Full candidate details
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/CandidateDetailResponse' }
+        '404': { $ref: '#/components/responses/NotFound' }
+  /api/candidates/{id}/status:
+    patch:
+      summary: Set pipeline status (manual recruiter action)
+      operationId: updateCandidateStatus
+      parameters:
+        - { $ref: '#/components/parameters/CandidateId' }
+        - { $ref: '#/components/parameters/SimulateError' }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [status]
+              properties:
+                status: { $ref: '#/components/schemas/CandidateStatus' }
+      responses:
+        '200':
+          description: Updated candidate
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/CandidateDetailResponse' }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '404': { $ref: '#/components/responses/NotFound' }
+        '503': { $ref: '#/components/responses/SimulatedFailure' }
+  /api/candidates/{id}/shortlist:
+    post:
+      summary: Shortcut to set candidate status to shortlisted
+      operationId: shortlistCandidate
+      parameters:
+        - { $ref: '#/components/parameters/CandidateId' }
+      responses:
+        '200':
+          description: Shortlisted candidate
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/CandidateDetailResponse' }
+        '404': { $ref: '#/components/responses/NotFound' }
+components:
+  parameters:
+    CandidateId:
+      name: id
+      in: path
+      required: true
+      schema: { type: string, pattern: '^[a-zA-Z0-9-]+$' }
+      example: cand-001
+    DelayMs:
+      name: delayMs
+      in: query
+      schema: { type: integer, minimum: 0, maximum: 2000 }
+      description: Developer-only simulated delay for loading UI testing
+    SimulateError:
+      name: simulateError
+      in: query
+      schema: { type: string, enum: ['1'] }
+      description: Developer-only simulated 503 for rollback testing
+  schemas:
+    CandidateStatus: { type: string, enum: [new, shortlisted, interview, rejected] }
+    Requirement:
+      type: object
+      required: [skill, weight, priority]
+      properties:
+        skill: { type: string }
+        weight: { type: integer, minimum: 0, maximum: 100 }
+        priority: { type: string, enum: [must_have, nice_to_have] }
+    Job:
+      type: object
+      required: [id, title, focus, requirements, disclaimer]
+      properties:
+        id: { type: string }
+        title: { type: string }
+        focus: { type: string }
+        requirements: { type: array, items: { $ref: '#/components/schemas/Requirement' } }
+        disclaimer: { type: string }
+    CandidateBase:
+      type: object
+      required: [id, name, role, headline, location, experienceYears, skills, status, availability, workModel, summary, evidence, appliedAt, updatedAt, matchScore]
+      properties:
+        id: { type: string }
+        name: { type: string }
+        role: { type: string }
+        headline: { type: string }
+        location: { type: string }
+        experienceYears: { type: integer, minimum: 0 }
+        skills: { type: array, items: { type: string } }
+        status: { $ref: '#/components/schemas/CandidateStatus' }
+        availability: { type: string, enum: [immediate, two_weeks, one_month, negotiable] }
+        workModel: { type: string, enum: [remote, hybrid, onsite] }
+        summary: { type: string }
+        evidence: { type: array, items: { type: string } }
+        appliedAt: { type: string, format: date-time }
+        updatedAt: { type: string, format: date-time }
+        matchScore: { type: integer, minimum: 0, maximum: 100 }
+    MatchDetails:
+      type: object
+      required: [jobId, matchedRequirements, missingRequirements, evidence, explanation]
+      properties:
+        jobId: { type: string }
+        matchedRequirements: { type: array, items: { $ref: '#/components/schemas/Requirement' } }
+        missingRequirements: { type: array, items: { $ref: '#/components/schemas/Requirement' } }
+        evidence: { type: array, items: { type: string } }
+        explanation: { type: string }
+    Candidate:
+      allOf:
+        - { $ref: '#/components/schemas/CandidateBase' }
+        - type: object
+          required: [match]
+          properties:
+            match: { $ref: '#/components/schemas/MatchDetails' }
+    CandidateListResponse:
+      type: object
+      required: [data, meta]
+      properties:
+        data: { type: array, items: { $ref: '#/components/schemas/CandidateBase' } }
+        meta:
+          type: object
+          required: [page, limit, total, totalPages, statusCounts]
+          properties:
+            page: { type: integer }
+            limit: { type: integer }
+            total: { type: integer }
+            totalPages: { type: integer }
+            statusCounts:
+              type: object
+              properties:
+                new: { type: integer }
+                shortlisted: { type: integer }
+                interview: { type: integer }
+                rejected: { type: integer }
+    CandidateDetailResponse:
+      type: object
+      required: [data]
+      properties:
+        data: { $ref: '#/components/schemas/Candidate' }
+    ApiError:
+      type: object
+      required: [error]
+      properties:
+        error:
+          type: object
+          required: [code, message]
+          properties:
+            code: { type: string }
+            message: { type: string }
+  responses:
+    BadRequest:
+      description: Invalid request or query parameters
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/ApiError' }
+    NotFound:
+      description: Candidate or route not found
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/ApiError' }
+    SimulatedFailure:
+      description: Deliberate test failure for UI error handling
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/ApiError' }
